@@ -1,0 +1,49 @@
+{% extends "base_blog.html" %}
+{% load static %}
+{% block blog_section %}
+    <script type="text/javascript">
+        function submit_login(){
+            $.ajax({
+                url:"{% url 'validate_login' %}",
+                method:"POST",
+                data:{'email':$('#login_email').val(),'password':$('#login_password').val(),'referer_url':$('#referer_url').val()},
+                type:"json",
+                success:function(callback){
+                    var data = $.parseJSON(callback)
+                    if (data.lg_flag == 1){
+                        window.location.href =data.referer_url
+                    }else{
+                        alert(data.errormsg)
+                    }
+                },
+            })
+        }
+
+    </script>
+
+                <div class="center-in-center" >
+                    <div class="center-align">
+                        <h2>Login</h2>
+                    </div>
+                    <form action="{% url "validate_login" %}" method="post" class="comment-area w100dt" id="loginform">
+                    {% csrf_token %}
+                                <div class="form-item">
+                                     {{ lf.email }}
+{#                                <label for="login_email">EMAIL</label>#}
+                                </div>
+                                <br>
+                                <div class="form-item">
+                               {{ lf.password }}
+{#                                 <label for="login_password">PASSWORD</label>#}
+                                </div>
+                                <input type="hidden" id="referer_url" name="referer_url" value="{{ request.META.HTTP_REFERER }}">
+                                <br>
+                                <a class="waves-effect waves-light" href="javascript:submit_login()">SUBMIT</a>
+
+                    </form>
+                </div>
+
+{% endblock %}
+{% block base_footer_block %}
+{#    {% include "base/base_footer_section.html" %}#}
+{% endblock %}

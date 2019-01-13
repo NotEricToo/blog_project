@@ -1,0 +1,37 @@
+{% load static %}
+{% block previous_next_blog_section %}
+    <div class="prv-nxt-post w100dt mb-30">
+        <div class="row">
+
+            <div class="col m6 s12">
+                <div class="sb-prv-post">
+                    <div class="pn-img left">
+                        <img src="{% static 'img/img1.jpg' %}" alt="Image">
+                    </div>
+                    <div class="pn-text left-align">
+                        <a href="#" class="title-name mb-10">Lorem ipsum dolor sit amet consectetur</a>
+                        <a href="#" class="prv-nxt-btn l-blue"><i class="icofont icofont-caret-left"></i> Preveious</a>
+                    </div>
+                </div>
+                <!-- /.sb-prv-post -->
+            </div>
+            <!-- colm6 -->
+
+            <div class="col m6 s12">
+                <div class="sb-nxt-post">
+                    <div class="pn-img right">
+                        <img src="{% static 'img/img2.jpg' %}" alt="Image">
+                    </div>
+                    <div class="pn-text right-align">
+                        <a href="#" class="title-name mb-10">Lorem ipsum dolor sit amet consectetur</a>
+                        <a href="#" class="prv-nxt-btn l-blue">Next <i class="icofont icofont-caret-right"></i></a>
+                    </div>
+                </div>
+                <!-- /.sb-nxt-post -->
+            </div>
+            <!-- colm6 -->
+
+        </div>
+        <!-- row -->
+    </div>
+{% endblock %}

@@ -1,0 +1,118 @@
+{% extends "base_blog.html" %}
+{% load static %}
+{% block blog_slider_section %}
+    {% include "single-blog/base_single_blog_head.html" %}
+    <script type="text/javascript">
+
+    </script>
+{% endblock %}
+
+
+{% block blog_section %}
+
+{% block article_block %}
+<!-- ==================== single-blog-section start ====================-->
+		<section id="single-blog-section" class="single-blog-section w100dt mb-50">
+			<div class="container">
+				<div class="row">
+                 <div class="col m8 s12">
+                    <div class="blogs mb-30">
+                        <div class="card">
+
+                            <div class="card-image">
+                                <img src="{% static 'img/selfie.jpg' %}" alt="Image">
+                            </div>
+                            <!-- /.card-image -->
+                            <div class="card-content w100dt">
+                                <p>
+                                    <a href="#" class="tag left w100dt l-blue mb-30">Lifestyle</a>
+                                </p>
+                                <a href="#" class="card-title mb-30">
+                                    {{ single_article.atc_topic }}
+                                </a>
+
+                                <p class="mb-30">
+                                    {{ single_article.atc_desc }}
+                                </p>
+                                <p>-----------------------------------------------------------</p>
+
+                                <p class="w100dt mb-10">
+                                    {{ single_article.atc_content }}
+                                </p>
+
+
+                                <ul class="tag-list left">
+                                    {% for category in single_article.category_set.all %}
+                                    <li><a href="#!" class="waves-effect">#{{ category.cg_name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                                <br/><br/>
+                                <!--
+                                <ul class="share-links right">
+                                    <li><a href="#" class="facebook"><i class="icofont icofont-social-facebook"></i></a></li>
+                                    <li><a href="#" class="twitter"><i class="icofont icofont-social-twitter"></i></a></li>
+                                    <li><a href="#" class="google-plus"><i class="icofont icofont-social-google-plus"></i></a></li>
+                                    <li><a href="#" class="linkedin"><i class="icofont icofont-brand-linkedin"></i></a></li>
+                                    <li><a href="#" class="pinterest"><i class="icofont icofont-social-pinterest"></i></a></li>
+                                    <li><a href="#" class="instagram"><i class="icofont icofont-social-instagram"></i></a></li>
+                                </ul>
+                                -->
+                                 <ul class="post-mate-time left mb-30">
+                                    <li>
+                                        <p class="hero left">
+                                            By - <a href="#" class="l-blue">SujonMaji</a>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <i class="icofont icofont-ui-calendar"></i> {{ single_article.create_time|date:"Y-m-d h:m:s" }}
+                                    </li>
+                                </ul>
+
+                                <ul class="post-mate right mb-30">
+                                    <li class="like" >
+                                        <a href="javascript:click_article_like()" >
+                                            <i class="icofont icofont-heart-alt"></i> <span id="article_like_count">{{ single_article.like_count }}</span>
+                                        </a>
+                                    </li>
+                                    <li class="comment">
+                                        <a href="#">
+                                            <i class="icofont icofont-comment"></i> {{ single_article.comment_set.all.count }}
+                                        </a>
+                                    </li>
+                                     <li class="reply">
+                                        <a href="javascript:show_leave_comment_div()">
+                                            Reply
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- /.card-content -->
+
+
+
+
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.blogs -->
+
+    {% include "single-blog/base_previous_next_blog_section.html" %}
+    {% include "single-blog/base_blog_comments_section.html" %}
+    {% include "single-blog/base_leave_comment_blog_section.html" %}
+{% endblock article_block %}
+</div>
+    {% block side_bar_blank_section %}
+    <!-- all right side bars are included in this html -->
+        {% include "base/base_sidebar_section.html" %}
+    {% endblock %}
+    </div>
+    <!-- row -->
+    </div>
+    <!-- container -->
+    </section>
+{% endblock blog_section %}
+
+
+
+
+

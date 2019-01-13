@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx">
+
+	<head>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>{{ title }}</title>
+
+
+
+        {% include "base/base_head_css.html" %}
+        {% include "base/base-javascript.html" %}
+	</head>
+
+
+	<body>
+
+        <!-- include the top and back button -->
+        {% include "base/base_top_and_back.html" %}
+
+        <!-- include the head link section -->
+        {% include "base/base_head_section.html" %}
+
+        {% block blog_slider_section %}
+            <!-- include the picture under the head section -->
+
+        {% endblock %}
+
+
+        {% block blog_section %}
+
+                    {% block article_block %}
+                        <!-- colm8 -->
+                    {% endblock %}
+
+                    {% block side_bar_blank_section %}
+                    <!-- all right side bars are included in this html -->
+
+                    {% endblock %}
+        {% endblock blog_section %}
+
+        {% block base_footer_block %}
+        <!-- Find us section -->
+            {% include "base/base_instag_leftram_section.html" %}
+            {% include "base/base_footer_section.html" %}
+
+        {% endblock %}
+        {% include "base/base_footer_css_section.html" %}
+
+	</body>
+
+</html>

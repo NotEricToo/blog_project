@@ -1,0 +1,17 @@
+{% load static %}
+{% block sidebar_section %}
+<!-- side bar html include section -->
+    <div class="col s12 m4 l4">
+        <!-- the side bar imonial section : Hi its me -->
+        {% include "base/base_side_bar_imonial_section.html" %}
+        <!-- the follow me sectoin : Follow me -->
+        {% include "base/base_follow_me_section.html" %}
+        <!-- The featured post -->
+        {% include "base/base_featured_posts_section.html" %}
+        <!-- Top post -->
+        {% include "base/base_top_posts.html" %}
+        <!-- The subscribe section -->
+        {% include "base/base_sidebar_subscribe.html" %}
+    </div>
+<!-- colm4 -->
+{% endblock %}

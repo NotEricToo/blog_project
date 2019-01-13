@@ -1,0 +1,112 @@
+{% extends "base_blog.html" %}
+{% load static %}
+{% block blog_slider_section %}
+    <!-- include the picture under the head section -->
+    {% include "base/base_blog_slider_section.html" %}
+    <!-- include the lifestyle section -->
+    {% include "base/base_daily_lifestyle.html" %}
+
+{% endblock %}
+
+{% block blog_section %}
+<!-- ==================== blog-section start ==================== -->
+<section id="blog-section" class="blog-section w100dt mb-50">
+    <div class="container">
+        <div class="row">
+             <div class="col s12 m8 l8">
+
+
+{% block article_block %}
+{% for article in home_article_list %}
+    <div class="blogs mb-30">
+        <div class="card">
+            <div class="card-image">
+                <!--<img src="{% static 'img/img3.jpg' %}" alt="Image">-->
+                <!--<a class="btn-floating center-align cmn-bgcolor halfway-fab waves-effect waves-light">
+                     <i class="icofont icofont-camera-alt"></i>
+                </a>-->
+            </div>
+            <!-- /.card-image -->
+            <div class="card-content w100dt">
+                <p>
+                    <a href="#" class="tag left w100dt l-blue mb-30">Lifestyle</a>
+                </p>
+                <a href="{% url 'single_blog' article.id %}" class="card-title">
+                    {{ article.atc_topic }}
+                </a>
+                <p class="mb-30">
+                    {{ article.atc_desc|slice:"20" }}
+                </p>
+                <ul class="post-mate-time left">
+                    <li>
+                        <p class="hero left">
+                            By - <a href="#" class="l-blue">SujonMaji</a>
+                        </p>
+                    </li>
+                    <li>
+                        <i class="icofont icofont-ui-calendar"></i> {{ article.create_time|date:"Y-m-d H:i:s" }}
+                    </li>
+                </ul>
+
+                <ul class="post-mate right">
+                    <li class="like">
+                        <a href="#">
+                            <i class="icofont icofont-eye-alt"></i> {{ article.click_count }}
+                        </a>
+                    </li>
+                    <li class="like">
+                        <a href="#">
+                            <i class="icofont icofont-heart-alt"></i> {{ article.like_count }}
+                        </a>
+                    </li>
+                    <li class="comment">
+                        <a href="#">
+                            <i class="icofont icofont-comment"></i> {{ article.comment_set.all.count }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.card-content -->
+        </div>
+        <!-- /.card -->
+    </div>
+    <!-- /.blogs -->
+
+{% endfor %}
+    <ul class="pagination w100dt">
+        {% if home_article_list.has_previous %}
+            <li class="active"><a href="?page={{ home_article_list.previous_page_number }}"><i class="icofont icofont-simple-left"></i></a></li>
+        {% else %}
+            <li class="waves-effect"><a><i class="icofont icofont-simple-left"></i></a></li>
+        {% endif %}
+        {% if home_article_list.number <= home_article_list.paginator.num_pages %}
+{#            <li class="active"><a>{{  home_article_list.number }}</a></li>#}
+            {% for i in rangelist %}
+                {% if home_article_list.number == i %}
+                    <li class="active"><a href="">{{ i }}</a></li>
+                {% else %}
+                    <li class="waves-effect"><a href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        {% if home_article_list.has_next %}
+            <li  class="active"><a href="?page={{ home_article_list.next_page_number }}"><i class="icofont icofont-simple-right"></i></a></li>
+        {% else %}
+            <li class="waves-effect"><a><i class="icofont icofont-simple-right"></i></a></li>
+        {% endif %}
+    </ul>
+{% endblock %}
+</div>
+
+        {% block side_bar_blank_section %}
+        <!-- all right side bars are included in this html -->
+            {% include "base/base_sidebar_section.html" %}
+        {% endblock %}
+    </div>
+    <!-- row -->
+</div>
+<!-- container -->
+</section>
+<!-- /#blog-section -->
+<!-- ==================== blog-section end ==================== -->
+{% endblock blog_section %}

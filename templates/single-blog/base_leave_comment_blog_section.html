@@ -1,0 +1,68 @@
+{% load static %}
+{% block leave_comment_blog_section %}
+
+<script type="text/javascript">
+
+    function comment_login_status(){
+         var login_status = {{ login_status }}
+        var username = '{{ username }}'
+        var loginemail='{{ login_email }}'
+        {#alert(loginemail)#}
+        if (login_status== '1'){
+            document.getElementById('icon_prefix').value = username
+            document.getElementById('icon_prefix').readOnly = true
+            document.getElementById('email').value = loginemail
+            document.getElementById('email').readOnly = true
+        }
+    }
+
+</script>
+{#     style="display: none"  #}
+<div class="leave-comment" id="leave_comment_div" style="display: none">
+
+    <div class="sidebar-title center-align">
+        <h2>Leave Your Comment</h2>
+    </div>
+
+    <form class="comment-area w100dt" action={% url "create_comment" %} method="post">
+     {% csrf_token %}
+        <div class="row">
+            <div class="col m6 s12">
+                <div class="form-item">
+{#                    <input id="icon_prefix" type="text" class="validate">#}
+{#                    <label for="icon_prefix">First Name</label>#}
+                    {{ cmt_form.username }}
+{#                    <label for="icon_prefix">First Name</label>#}
+                </div>
+            </div>
+            <div class="col m6 s12">
+                <div class="form-item">
+{#                    <input id="email" type="email" class="validate">#}
+{#                    <label for="email" data-error="wrong" data-success="right">Email</label>#}
+                    {{ cmt_form.email }}
+{#                    <label for="email" data-error="wrong" data-success="right">Email</label>#}
+                </div>
+            </div>
+            <div class="col s12">
+                <div class="form-item">
+{#                    <textarea id="textarea1" class="materialize-textarea"></textarea>#}
+{#                    <label for="textarea1">Textarea</label>#}
+                    {{ cmt_form.cmt_content }}
+{#                    <label for="textarea1">Textarea</label>#}
+                </div>
+            </div>
+        </div>
+        <!-- row -->
+        <input id="article_id"  name= "article_id" style="display: none;" value={{ single_article.id }}>
+{#        <input id="super_comment_id" name="super_comment_id" style="display: none;" >#}
+        {{ cmt_form.super_comment_id }}
+
+
+
+{#        <button type="button" class="custom-btn waves-effect waves-light right">SUBMIT NOW</button>#}
+        <input type="submit" value="SUBMIT NOW" class="">
+    </form>
+    <!-- /.comment-area -->
+</div>
+<!-- /.leave-comment -->
+{% endblock %}

@@ -1,0 +1,24 @@
+{% load static %}
+{% block blog_slider_section %}
+    <!-- ==================== header-section Start ====================-->
+    <section id="breadcrumb-section" class="breadcrumb-section w100dt mb-30">
+        <div class="container">
+
+            <nav class="breadcrumb-nav w100dt">
+                <div class="page-name hide-on-small-only left">
+                    <h4>SINGLE BLOG</h4>
+                </div>
+                <div class="nav-wrapper right">
+                    <a href="{% url 'blog'  %}" class="breadcrumb">Home</a>
+                    <a href="" class="breadcrumb active">Blog Single</a>
+                </div>
+                <!-- /.nav-wrapper -->
+            </nav>
+            <!-- /.breadcrumb-nav -->
+
+        </div>
+        <!-- container -->
+    </section>
+    <!-- /.breadcrumb-section -->
+    <!-- ==================== header-section End ====================-->
+{% endblock %}

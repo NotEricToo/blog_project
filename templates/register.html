@@ -1,0 +1,173 @@
+{% extends "base_blog.html" %}
+{% load static %}
+{% block blog_section %}
+    <script type="text/javascript">
+        function format_email(){
+            var emailstr = $('#reg_email').val()
+            {#alert(emailstr)#}
+             if( emailstr.replace(/\s+/g,"") == "" ){
+                 document.getElementById('spaneregemail').innerHTML='Email can not be null!!'
+                 document.getElementById('spaneregemail').style.color = "red"
+                 return false
+             }else if(emailstr.indexOf('@')==-1){
+                 document.getElementById('spaneregemail').innerHTML='Email format not correct!!'
+                 document.getElementById('spaneregemail').style.color = "red"
+                 return false
+             }
+             return true
+        }
+         function validate_email(){
+             {#alert('emal')#}
+             if (!format_email()){ return }
+             $.ajax({
+                 url:'{% url "validate_regemail" %}',
+                 data:{'email':$('#reg_email').val()},
+                 type:'json',
+                 method:'GET',
+                 success:function(callback){
+                    var data = $.parseJSON(callback)
+                    if (data.email_exists==1){
+                        document.getElementById('spaneregemail').innerHTML='Email exists!!'
+                        document.getElementById('spaneregemail').style.color = "red"
+                        return false
+                    }else{
+                        document.getElementById('spaneregemail').innerHTML='Email address available!!'
+                        document.getElementById('spaneregemail').style.color = "black"
+                        return false
+                    }
+                 }
+             })
+             return true
+         }
+
+         function format_username(){
+             var reg_username = $('#reg_username').val()
+              if(reg_username.replace(/\s+/g,"") == ""  ){
+                  document.getElementById('spanregusername').innerHTML='Username can not be null!!'
+                  document.getElementById('spanregusername').style.color = "red"
+                  return false
+              }
+              return true
+         }
+          function validate_username(){
+            if(!format_username()){ return }
+             $.ajax({
+                 url:'{% url "validate_username" %}',
+                 data:{'username':$('#reg_username').val()},
+                 type:'json',
+                 method:'GET',
+                 success:function(callback){
+                    var data = $.parseJSON(callback)
+                    if (data.username_exists==1){
+                        document.getElementById('spanregusername').innerHTML='Username exists!!'
+                        document.getElementById('spanregusername').style.color = "red"
+                        return false
+                    }else{
+                        document.getElementById('spanregusername').innerHTML='Username address available!!'
+                        document.getElementById('spanregusername').style.color = "black"
+                        return false
+                    }
+                 }
+             })
+              return true
+         }
+
+        function password_check(){
+            var password = $('#reg_password').val()
+            var password2 = $('#reg_password2').val()
+            if(password.replace(/\s+/g,"") == "" || password2.replace(/\s+/g,"") == ""){
+                document.getElementById('password2span').innerHTML = 'All password can not be null !'
+                document.getElementById('password2span').style.color = "red"
+                return false
+            }
+            if (password != password2){
+                document.getElementById('password2span').innerHTML = 'Two password not same!'
+                document.getElementById('password2span').style.color = "red"
+                return false
+            }
+            document.getElementById('password2span').innerHTML = 'Password validation successfully'
+            document.getElementById('password2span').style.color = "black"
+            return true
+
+        }
+         function submit_reg(){
+            if( validate_username() && validate_email() && password_check() ){
+                $.ajax({
+                     url:'{% url "commit_register" %}',
+                     data:{'email':$('#reg_email').val(),
+                            'password':$('#reg_password').val(),
+                            'password2':$('#reg_password2').val(),
+                            'username':$('#reg_username').val(),
+                            'desc':$('#reg_desc').val(),
+                            'chinese_name':$('#reg_chiniesename').val(),
+                            'referer_url':$('#reg_referer_url').val(),
+                     },
+                     type:'json',
+                     method:'POST',
+                     success:function(callback){
+                        var data = $.parseJSON(callback)
+                         if(data.lg_flag == 1 ){
+                            window.location.href=data.referer_url
+                         }else{
+                             alert(data.errormsg)
+                         }
+                     }
+                 })
+            }else{
+                alert('Please improve all information')
+            }
+         }
+
+    </script>
+
+                <div class="center-in-center" >
+                    <div class="center-align">
+                        <h2>REGISTER BLOG</h2>
+                    </div>
+                    <div style="height:500px;width:500px">
+                    <form action="" method="post" class="comment-area w100dt" id="registerform">
+
+                                <div class="form-item">
+                                     {{ rf.email }}
+                                    <span id="spaneregemail"> EMAIL Required</span>
+                                </div>
+
+                                <div class="form-item">
+                                    {{ rf.username }}
+                                    <span id="spanregusername">  USERNAME Required</span>
+                                </div>
+
+                                <div class="form-item">
+                                    {{ rf.password }}
+                                    <span id="password1span">Please input password</span>
+                                </div>
+
+                                <div class="form-item">
+                                    {{ rf.password2 }}
+                                    <span id="password2span">Please input password agian</span>
+                                </div>
+                                <br>
+                                <div class="center-align">
+                                    <h2>USER INFO</h2>
+                                </div>
+                                <div class="form-item">
+                                    {{ rf.chinese_name }}
+                                </div>
+                                <br>
+                                <div class="form-item">
+                                    {{ rf.desc }}
+                                </div>
+
+                                <input type="hidden" id="reg_referer_url" name="reg_referer_url" value="{{ request.META.HTTP_REFERER }}">
+                                <br>
+                                <a class="waves-effect waves-light" href="javascript:submit_reg()">SUBMIT</a>
+
+
+                    </form>
+                    </div>
+                </div>
+
+{% endblock %}
+{% block base_footer_block %}
+{#    {% include "base/base_footer_section.html" %}#}
+{% endblock %}

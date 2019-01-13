@@ -1,0 +1,141 @@
+{% load static %}
+{% block blog_comments_section %}
+<script type="text/javascript">
+    function show_leave_comment_div(){
+        comment_login_status()
+        {#alert(111)#}
+        {#var value = document.getElementById("div1").style.display;#}
+        {#var dvalue = $('#leave_comment_div').style.display#}
+        var dvalue =  document.getElementById("leave_comment_div").style.display;
+        if (dvalue=="none"){
+            document.getElementById('leave_comment_div').style.display="block";
+             $("html, body").animate({
+                  scrollTop: $("#leave_comment_div").offset().top }, {duration: 500,easing: "swing"});
+
+        }else{
+            document.getElementById('leave_comment_div').style.display="none";
+        }
+        {#document.getElementById('super_comment_id').value  = null#}
+    }
+
+    function set_super_comment(super_comment){
+        {#alert(super_comment)#}
+        document.getElementById('super_comment_id').value  =super_comment
+        {#alert(document.getElementById('super_comment_id').value)#}
+        show_leave_comment_div()
+    }
+
+    function click_article_like(){
+        AjaxUtil.request({
+            url:"{% url "json_test" %}",
+            params:{"article_id":"{{ single_article.id }}"},
+            type:"json",
+            callback:click_like_callback,
+        });
+    }
+
+    function click_like_callback(json){
+        {#alert(json.like_count)#}
+        document.getElementById("article_like_count").innerHTML = json.like_count
+    }
+
+
+</script>
+<div class="peoples-comments w100dt mb-30">
+    <div class="sidebar-title center-align">
+        <h2>10 Comments</h2>
+    </div>
+
+    <div class="comment-area w100dt">
+        {% for comment in article_comment_list %}
+            {% if not comment.super_comment  %}
+            <div class="comment w100dt mb-30">
+
+                <div class="ppic left">
+                    <img src="{% static 'img/img1.png' %}" alt="Image">
+                </div>
+                <!-- /.ppic -->
+                <div class="pname">
+                    <h4 class="mb-10">
+                        <a href="#" class="card-title l-blue">
+                           {{ comment.username }}
+                        </a>
+                    </h4>
+                    <p class="comment-text mb-10">
+                        {{ comment.cmt_content }}
+                    </p>
+
+                    <ul class="post-mate-time left">
+                        <li class="like">
+                            <a href="#">
+                                <i class="icofont icofont-heart-alt"></i> {{ comment.like_count }}
+                            </a>
+                        </li>
+                        <li class="comment">
+                            <a href="#">
+                                <i class="icofont icofont-comment"></i> 32-{{ comment.like_count }}
+                            </a>
+                        </li>
+                        <li class="reply">
+                            <a href="javascript:set_super_comment({{ comment.id }})">
+                                Reply
+                            </a>
+                        </li>
+                        <li>
+                            <i class="icofont icofont-ui-calendar"></i> {{ comment.create_time|date:"Y-m-d" }}
+                        </li>
+                    </ul>
+                </div>
+                {% for sub_comment in  sub_comment_list %}
+                    {% if sub_comment.super_comment == comment.id %}
+                        <!-- /.pname -->
+                        <div class="cmnt-reply comment w100dt">
+                            <div class="ppic left">
+                                <img src="{% static 'img/img2.png' %}" alt="Image">
+                            </div>
+                            <!-- /.ppic -->
+                            <div class="pname">
+                                <h4 class="mb-10">
+                                    <a href="#" class="card-title l-blue">
+                                        {{ sub_comment.username }}
+                                    </a>
+                                </h4>
+                                <p class="comment-text mb-10">
+                                    {{ sub_comment.cmt_content }}
+                                </p>
+
+                                <ul class="post-mate-time left">
+                                    <li class="like">
+                                        <a href="#">
+                                            <i class="icofont icofont-heart-alt"></i> {{ sub_comment.like_count }}
+                                        </a>
+                                    </li>
+                                    <!--
+                                    <li class="reply">
+                                        <a href="#">
+                                            Reply
+                                        </a>
+                                    </li>
+                                    -->
+                                    <li>
+                                        <i class="icofont icofont-ui-calendar"></i> {{ sub_comment.create_time|date:"Y-m-d" }}
+                                    </li>
+                                </ul>
+
+                            </div>
+                            <!-- /.pname -->
+                        </div>
+                <!-- /.cmnt-reply -->
+                        {% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
+        <!-- /.comment -->
+        {% endfor %}
+
+
+    </div>
+    <!-- /.comment-area -->
+</div>
+<!-- /.peoples-comments -->
+{% endblock %}

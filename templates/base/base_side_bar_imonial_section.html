@@ -1,0 +1,26 @@
+{% load static %}
+{% block side_bar_imonial_section %}
+<div class="sidebar-testimonial mb-30">
+    <div class="sidebar-title center-align">
+        <h2>Hi Its Me!</h2>
+    </div>
+    <!-- /.sidebar-title -->
+
+    <div class="carousel carousel-slider center" data-indicators="true">
+        {% for slider_ins in article_list %}
+        <div class="carousel-item">
+            <div class="item-img">
+                <span>{{ slider_ins.atc_topic|slice:":1" }}</span>
+            </div>
+            <h2>{{ slider_ins.atc_topic }}</h2>
+            <small>{{ slider_ins.atc_desc|slice:"50" }}</small>
+            <p>
+                {{ slider_ins.atc_content|slice:"100" }}
+            </p>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+<!-- /.sidebar-testimonial -->
+{% endblock %}

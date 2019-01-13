@@ -1,0 +1,153 @@
+{% load static %}
+{% block top_blog_posts %}
+<div class="top-post w100dt mb-30">
+    <div class="sidebar-title center-align">
+        <h2>Top Posts</h2>
+    </div>
+    <!-- /.sidebar-title -->
+
+    <ul id="tabs-swipe-demo" class="top-post-tab tabs tabs-fixed-width">
+        <li class="tab"><a href="#test-swipe-1" class="active">Most Views</a></li>
+        <li class="tab"><a href="#test-swipe-2">Recent</a></li>
+        <li class="tab"><a href="#test-swipe-3">Comments</a></li>
+    </ul>
+
+    <div id="test-swipe-1" class="tab-contant most-view">
+
+        <div class="sidebar-posts">
+
+            <div class="card">
+                <div class="card-image mb-10">
+                    <img src="{% static 'img/blog2.jpg' %}" alt="Image">
+                    <span class="effect"></span>
+                </div>
+                <!-- /.card-image -->
+                <div class="card-content w100dt">
+                    <p>
+                        <a href="#" class="tag left w100dt l-blue mb-10">{{ most_view_article.category_set.all.first.cg_name }}</a>
+                    </p>
+                    <a href="{% url 'single_blog' most_view_article.id %}" class="card-title">
+                        {{ most_view_article.atc_topic }}
+                    </a>
+                    <ul class="post-mate-time left">
+                        <li>
+                            <p class="hero left">
+                                By - <a href="#" class="l-blue">SujonMaji</a>
+                            </p>
+                        </li>
+                    </ul>
+
+                    <ul class="post-mate right">
+                        <li class="like">
+                            <a href="#">
+                                <i class="icofont icofont-heart-alt"></i> {{ most_view_article.like_count }}
+                            </a>
+                        </li>
+                        <li class="comment">
+                            <a href="#">
+                                <i class="icofont icofont-comment"></i> {{ most_view_article.comment_set.all.count }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.card-content -->
+            </div>
+            <!-- /.card -->
+            {% for most_view in article_list %}
+            <div class="hot-post w100dt mb-10">
+                <div class="hot-post-image">
+                    <img src="{% static 'img/img3.jpg' %}" alt="Image">
+                    <span class="effect"></span>
+                </div>
+                <!-- /.hot-post-image -->
+                <div class="hot-post-stacked">
+                    <p>
+                        <a href="#" class="tag left w100dt l-blue mb-10">{{ most_view.category_set.all.first.cg_name }}</a>
+                    </p>
+                    <a href="{% url 'single_blog' most_view.id %}" class="sm-name mb-10">{{ most_view.atc_topic }}</a>
+                    <div class="hot-post-action">
+                        <p class="hero left">
+                            BY - <a href="#" class="l-blue">SujonMaji</a>
+                        </p>
+                        <ul class="post-mate right">
+                            <li class="comment">
+                                <a href="#">
+                                    <i class="icofont icofont-comment"></i> {{ most_view.comment_set.all.count }}
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- /.post-mate -->
+                    </div>
+                    <!-- /.hot-post-action -->
+                </div>
+                <!-- /.hot-post-stacked -->
+            </div>
+            <!-- /.hot-post -->
+            {% endfor %}
+        </div>
+        <!-- /.sidebar-posts -->
+
+    </div>
+    <!-- /.most-view -->
+
+
+    <div id="test-swipe-2" class="tab-contant recent-post">
+
+        {% for recent_article in article_list %}
+        <div class="hot-post w100dt p-15">
+            <div class="hot-post-image">
+                <img src="{% static 'img/img3.jpg' %}" alt="Image">
+                <span class="effect"></span>
+            </div>
+            <!-- /.hot-post-image -->
+            <div class="hot-post-stacked">
+                <p>
+                    <a href="#" class="tag left w100dt l-blue mb-10">{{ recent_article.catetory_set.all.first.cg_name }}</a>
+                </p>
+                <a href="{% url 'single_blog' recent_article.id %}" class="sm-name mb-10">{{ recent_article.atc_topic }}</a>
+                <div class="hot-post-action">
+                    <p class="hero left">
+                        BY - <a href="#" class="l-blue">SujonMaji</a>
+                    </p>
+                    <ul class="post-mate right">
+                        <li class="comment">
+                            <a href="#">
+                                <i class="icofont icofont-comment"></i> {{ recent_article.comment_set.all.count }}
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.post-mate -->
+                </div>
+                <!-- /.hot-post-action -->
+            </div>
+            <!-- /.hot-post-stacked -->
+        </div>
+        <!-- /.hot-post -->
+        {% endfor %}
+
+    </div>
+    <!-- /.recent-post -->
+
+
+    <div id="test-swipe-3" class="tab-contant Comments-post">
+        {% for comment in comment_list %}
+        <div class="card-panel grey lighten-5 z-depth-1">
+            <div class="row valign-wrapper">
+                <div class="col s3">
+                    <img src="{% static 'img/img1.png' %}" alt="Image" class="circle responsive-img"> <!-- notice the "circle" class -->
+                </div>
+                <div class="col s9">
+                    <span class="black-text">
+                        {{ comment.cmt_content }}
+                    </span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <!-- card-panel -->
+
+    </div>
+    <!-- /.tab-contant -->
+</div>
+<!-- /.top-post -->
+{% endblock %}
